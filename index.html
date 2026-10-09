@@ -6,23 +6,27 @@
 </head>
 <body>
     <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        
-        // Dynamically get parameters passed by your backend
-        const username = urlParams.get('username');
-        const token = urlParams.get('token');
-        const status = urlParams.get('status') || 'ALLOWED';
+        (function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            
+            // Extract query parameters
+            const username = urlParams.get('username');
+            const token = urlParams.get('token');
+            const status = urlParams.get('status') || 'ALLOWED';
 
-        if (window.opener) {
-            window.opener.postMessage({
-                type: 'REOS_AUTH_GITHUB_CALLBACK',
-                username: username,
-                token: token,
-                status: status
-            }, '*');
+            if (window.opener) {
+                window.opener.postMessage({
+                    type: 'REOS_AUTH_GITHUB_CALLBACK',
+                    username: username,
+                    token: token,
+                    status: status
+                }, '*');
 
-            setTimeout(() => window.close(), 300);
-        }
+                setTimeout(function() {
+                    window.close();
+                }, 300);
+            }
+        })();
     </script>
 </body>
 </html>
