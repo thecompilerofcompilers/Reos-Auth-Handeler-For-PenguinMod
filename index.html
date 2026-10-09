@@ -2,23 +2,45 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reos Auth Callback</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .card {
+            background: #1e1e1e;
+            padding: 24px 32px;
+            border-radius: 12px;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
+    <div class="card">
+        <h3>Authenticating...</h3>
+        <p>Completing login with Reos Auth</p>
+    </div>
+
     <script>
         (function() {
             const urlParams = new URLSearchParams(window.location.search);
             
-            // Extract query parameters
-            const username = urlParams.get('username');
-            const token = urlParams.get('token');
-            const status = urlParams.get('status') || 'ALLOWED';
+            // Extracts code from backend redirect (e.g., ?code=AUTH_CODE_HERE)
+            const code = urlParams.get('code') || '';
+            const status = urlParams.get('status') || (code ? 'ALLOWED' : 'FAILED');
 
             if (window.opener) {
                 window.opener.postMessage({
                     type: 'REOS_AUTH_GITHUB_CALLBACK',
-                    username: username,
-                    token: token,
+                    code: code,
                     status: status
                 }, '*');
 
