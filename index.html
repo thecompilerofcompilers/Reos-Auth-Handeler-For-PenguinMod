@@ -3,37 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Reos Auth Callback</title>
-    <style>
-        body {
-            font-family: system-ui, sans-serif;
-            background-color: #1c1c1e;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .card {
-            background-color: #2c2c2e;
-            padding: 24px;
-            border-radius: 12px;
-            text-align: center;
-        }
-    </style>
 </head>
 <body>
-    <div class="card">
-        <h3>Authenticating...</h3>
-        <p>Passing auth data to PenguinMod.</p>
-    </div>
-
     <script>
         const urlParams = new URLSearchParams(window.location.search);
         
-        // Extract auth payload passed directly from backend
-        const username = urlParams.get('username') || '';
-        const token = urlParams.get('token') || '';
+        // Dynamically get parameters passed by your backend
+        const username = urlParams.get('username');
+        const token = urlParams.get('token');
         const status = urlParams.get('status') || 'ALLOWED';
 
         if (window.opener) {
@@ -44,7 +21,7 @@
                 status: status
             }, '*');
 
-            setTimeout(() => window.close(), 500);
+            setTimeout(() => window.close(), 300);
         }
     </script>
 </body>
